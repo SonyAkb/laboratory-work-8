@@ -36,9 +36,9 @@ int main() {
 	const int max_size = 50;
 	student mas_students[max_size]; //массив всех студентов
 	int population; //количество студентов
-	
+
 	string name_st, last_n_st, patr_st, data_st, addr_st;
-	int rat;
+	int rat = 0;
 
 	do {
 		cout << "Введите количество студентов (от 1 до " << max_size << "): ";
@@ -48,35 +48,47 @@ int main() {
 	for (int i = 0; i < population; i++) { //ввожу данные всех студентов
 		cout << "Введите Фамилию студента: ";
 		cin >> last_n_st; //фамилия
-		cout << "Введите Имя студента: ";
-		cin >> name_st; //имя
-		cout << "Введите Отчество студента: ";
-		cin >> patr_st; //отчество
+		//cout << "Введите Имя студента: ";
+		//cin >> name_st; //имя
+		//cout << "Введите Отчество студента: ";
+		//cin >> patr_st; //отчество
 		cout << "Введите дату рождения студента (в формате ДД.ММ.ГГГГ): ";
 		cin >> data_st; //дата рождения в формате ДД.ММ.ГГГГ
-		cout << "Введите домашний адрес студента: ";
-		cin.ignore();
-		getline(cin, addr_st); //домашний адрес
+		//cout << "Введите домашний адрес студента: ";
+		//cin.ignore();
+		//getline(cin, addr_st); //домашний адрес
 
-		do {
-			cout << "Введите рейтинг студента: ";
-			cin >> rat; //рейтинг от 0 до 100
-		} while (rat < 0 || rat > 100);
+		//do {
+		//	cout << "Введите рейтинг студента: ";
+		//	cin >> rat; //рейтинг от 0 до 100
+		//} while (rat < 0 || rat > 100);
 		cout << endl;
 
 		mas_students[i].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat);
 	}
 
 	for (int i = 0; i < population; i++) {
-		cout << "ВЫВОД имя студента: "<<i<<endl;
+		cout << "ВЫВОД имя студента: " << i << endl;
 		print(mas_students[i]);
 
 	}
 
-	//student N;
-	//N.enter_inform("Ivan", "Ivanov", "Ivanoviz", "01.12.2001", "Ekaterininskai, 4", 52);
-	
-	//print(N);
+	int mas_index_del[max_size * 2]; //массив удаленных индексов
+	int k = 0; //текущий индекс последнего удаленного
+	for (int i = 0; i < population - 1; i++) {
+		for (int j = i + 1; j < population; j++) {
+			if (mas_students[i].data == mas_students[j].data) {
+				mas_index_del[k] = i; //добавляю в массив индекс первого совпадения
+				mas_index_del[k + 1] = j; //добавляю в массив индекс второго совпадения
+				k += 2; //увеличивую последний текущий элемент
+			}
+		}
+	}
+
+	for (int i = 0; i < k; i++) {
+		cout << mas_index_del[i] << ' ';
+	}
+
 
 
 	return 0;
