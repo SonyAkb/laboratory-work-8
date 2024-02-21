@@ -1,117 +1,67 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include <fstream>
 using namespace std;
 
-struct student { //структура Студент
-	string name = "Иван"; //имя
-	string last_name = "Иванов"; //фамилия
-	string patronymic = "Иванович"; //отчество
-	string data = "01.01.2000"; //дата рождения в формате ДД.ММ.ГГГГ
-	string address = "Комсомольский проспект, 29"; //домашний адрес
-	int rating = 50; //рейтинг от 0 до 100
+struct student { //СЃС‚СЂСѓРєС‚СѓСЂР° РЎС‚СѓРґРµРЅС‚
+	string name; //РёРјСЏ
+	string last_name; //С„Р°РјРёР»РёСЏ
+	string patronymic; //РѕС‚С‡РµСЃС‚РІРѕ
+	string data; //РґР°С‚Р° СЂРѕР¶РґРµРЅРёСЏ РІ С„РѕСЂРјР°С‚Рµ Р”Р”.РњРњ.Р“Р“Р“Р“
+	string address; //РґРѕРјР°С€РЅРёР№ Р°РґСЂРµСЃ
+	int rating; //СЂРµР№С‚РёРЅРі РѕС‚ 0 РґРѕ 100
 
-	void enter_inform(string n, string l, string p, string d, string a, int r) { //ввод информации о студенте
-		name = n; //имя
-		last_name = l; //фамилия
-		patronymic = p; //отчество
-		data = d; //дата рождения в формате ДД.ММ.ГГГГ
-		address = a; //домашний адрес
-		rating = r; //рейтинг от 0 до 100
+	void enter_inform(string n, string l, string p, string d, string a, int r) { //РІРІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃС‚СѓРґРµРЅС‚Рµ
+		name = n; //РёРјСЏ
+		last_name = l; //С„Р°РјРёР»РёСЏ
+		patronymic = p; //РѕС‚С‡РµСЃС‚РІРѕ
+		data = d; //РґР°С‚Р° СЂРѕР¶РґРµРЅРёСЏ РІ С„РѕСЂРјР°С‚Рµ Р”Р”.РњРњ.Р“Р“Р“Р“
+		address = a; //РґРѕРјР°С€РЅРёР№ Р°РґСЂРµСЃ
+		rating = r; //СЂРµР№С‚РёРЅРі РѕС‚ 0 РґРѕ 100
 	}
 };
 
-bool check_mas(int* ptr, int index, int len) { //проверяю наличие элемента в массиве
-	bool flag = false; //элемент не найден
-	for (int i = 0; i < len && !flag; i++) { //перебираю элементы в массиве
-		if (index == ptr[i]) { //если элемент найден
-			flag = true; //флаг меняется, элемент найден
-		}
-	}
-	return flag;
-}
-
-void create_student(string& name_st, string& last_n_st, string& patr_st, string& data_st, string& addr_st, int& rat) { 
-	//ввод параметров студента
-
-	cout << "Введите Фамилию студента: ";
-	cin >> last_n_st; //фамилия
-	//cout << "Введите Имя студента: ";
-	//cin >> name_st; //имя
-	//cout << "Введите Отчество студента: ";
-	//cin >> patr_st; //отчество
-	cout << "Введите дату рождения студента (в формате ДД.ММ.ГГГГ): ";
-	cin >> data_st; //дата рождения в формате ДД.ММ.ГГГГ
-	//cout << "Введите домашний адрес студента: ";
-	//cin.ignore();
-	//getline(cin, addr_st); //домашний адрес
-
-	//do {
-	//	cout << "Введите рейтинг студента: ";
-	//	cin >> rat; //рейтинг от 0 до 100
-	//} while (rat < 0 || rat > 100);
-	cout << endl;
-}
-
-int last_name_search(struct student* N, int quantity, string last_name) { //проверяю наличие фамилии
-	int index = -1; //фамилия не найдена
-	for (int i = 0; i < quantity && index == -1; i++) {
-		if (last_name == N[i].last_name) { //если фамилия найдена
-			index = i; //индекс найденной фамилии
-		}
-	}
-	return index;
-}
-
-void writing_to_a_file(ofstream& file, struct student* N, int index) { //запись в файл студента
-	file << N[index].last_name << ' ' << N[index].name << N[index].patronymic << N[index].data << N[index].address << N[index].rating << endl;
-}
-
-void all_surnames(struct student* N, int quantity) { //вывод фамилий фсех студентов
-	cout << endl << "Допустимые фамилии студентов:" << endl;
-	cout << N[0].last_name; //вывод первой фамилии
-	for (int i = 1; i < quantity; i++) {
-		cout <<", " << N[i].last_name; //вывод каждой фамилии
-	}
-	cout << endl;
-}
+bool check_mas(int* ptr, int index, int len); //РїСЂРѕРІРµСЂСЏСЋ РЅР°Р»РёС‡РёРµ СЌР»РµРјРµРЅС‚Р° РІ РјР°СЃСЃРёРІРµ
+void create_student(string& name_st, string& last_n_st, string& patr_st, string& data_st, string& addr_st, int& rat);
+	//РІРІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ СЃС‚СѓРґРµРЅС‚Р°
+int last_name_search(struct student* N, int quantity, string last_name); //РїСЂРѕРІРµСЂСЏСЋ РЅР°Р»РёС‡РёРµ С„Р°РјРёР»РёРё
+void writing_to_a_file(ofstream& file, struct student* N, int index); //Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р» СЃС‚СѓРґРµРЅС‚Р°
+void all_surnames(struct student* N, int quantity); //РІС‹РІРѕРґ С„Р°РјРёР»РёР№ РІСЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ
 
 int main() {
-	setlocale(LC_ALL, "Russian"); //локализация
+	setlocale(LC_ALL, "Russian"); //Р»РѕРєР°Р»РёР·Р°С†РёСЏ
 	system("chcp 1251");
 	system("cls");
 
-	const int max_size = 50; //максимальное количество студентов
-	student mas_students[max_size]; //массив всех студентов
-	int population; //количество студентов
+	const int max_size = 50; //РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СѓРґРµРЅС‚РѕРІ
+	student mas_students[max_size]; //РјР°СЃСЃРёРІ РІСЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ
+	int population; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СѓРґРµРЅС‚РѕРІ
 
 	string name_st, last_n_st, patr_st, data_st, addr_st;
 	int rat = 0; 
 
 	do {
-		cout << "Введите количество студентов (от 1 до " << max_size << "): ";
-		cin >> population; //количество студентов
+		cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СѓРґРµРЅС‚РѕРІ (РѕС‚ 1 РґРѕ " << max_size << "): ";
+		cin >> population; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СѓРґРµРЅС‚РѕРІ
 	} while (population < 1 || population>max_size);
 	cout << endl;
 
-	for (int i = 0; i < population; i++) { //ввожу данные всех студентов
+	for (int i = 0; i < population; i++) { //РІРІРѕР¶Сѓ РґР°РЅРЅС‹Рµ РІСЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ
 		create_student(name_st, last_n_st, patr_st, data_st, addr_st, rat);
 		mas_students[i].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat);
 	}
 
-	int mas_index_del[max_size * 2]; //массив удаленных индексов
-	int k = 0; //текущий индекс последнего удаленного
-	bool check; //промежуточная переменная
+	int mas_index_del[max_size * 2]; //РјР°СЃСЃРёРІ СѓРґР°Р»РµРЅРЅС‹С… РёРЅРґРµРєСЃРѕРІ
+	int k = 0; //С‚РµРєСѓС‰РёР№ РёРЅРґРµРєСЃ РїРѕСЃР»РµРґРЅРµРіРѕ СѓРґР°Р»РµРЅРЅРѕРіРѕ
+	bool check; //РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ
 
-	for (int i = 0; i < population - 1; i++) { //прохожу по всем студентам
+	for (int i = 0; i < population - 1; i++) { //РїСЂРѕС…РѕР¶Сѓ РїРѕ РІСЃРµРј СЃС‚СѓРґРµРЅС‚Р°Рј
 		for (int j = i + 1; j < population; j++) {
-			if (mas_students[i].data == mas_students[j].data) { //сравниваю первого и второго студентов
-				//check = check_mas(mas_index_del, i, k);
+			if (mas_students[i].data == mas_students[j].data) { //СЃСЂР°РІРЅРёРІР°СЋ РїРµСЂРІРѕРіРѕ Рё РІС‚РѕСЂРѕРіРѕ СЃС‚СѓРґРµРЅС‚РѕРІ
 				if (!check_mas(mas_index_del, i, k)) {
 					mas_index_del[k] = i;
 					++k;
 				}
-				//check = check_mas(mas_index_del, j, k);
 				if (!check_mas(mas_index_del, j, k)) {
 					mas_index_del[k] = j;
 					++k;
@@ -120,40 +70,95 @@ int main() {
 		}
 	}
 
-	string surname; //необходимая фамилия
-	int index_new_surname; //индекс необходимой фамилии
+	string surname; //РЅРµРѕР±С…РѕРґРёРјР°СЏ С„Р°РјРёР»РёСЏ
+	int index_new_surname; //РёРЅРґРµРєСЃ РЅРµРѕР±С…РѕРґРёРјРѕР№ С„Р°РјРёР»РёРё
 
-	all_surnames(mas_students, population); //вывод доступных фамилий
-	cout << "Введите фамилию студента, перед которым необходимо записать нового студента: "; ////////////можно добавить перечинь фамилий
-	cin >> surname; //ввожу новую фамилию
-	index_new_surname = last_name_search(mas_students, population, surname); //индекс нужной фамилии
+	all_surnames(mas_students, population); //РІС‹РІРѕРґ РґРѕСЃС‚СѓРїРЅС‹С… С„Р°РјРёР»РёР№
+	cout << "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ СЃС‚СѓРґРµРЅС‚Р°, РїРµСЂРµРґ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ Р·Р°РїРёСЃР°С‚СЊ РЅРѕРІРѕРіРѕ СЃС‚СѓРґРµРЅС‚Р°: "; 
+	cin >> surname; //РІРІРѕР¶Сѓ РЅРѕРІСѓСЋ С„Р°РјРёР»РёСЋ
+	index_new_surname = last_name_search(mas_students, population, surname); //РёРЅРґРµРєСЃ РЅСѓР¶РЅРѕР№ С„Р°РјРёР»РёРё
 
-	while (index_new_surname == -1) { //если введенной фамилии нет
-		cout << endl << "Такой фамилии нет!";
-		all_surnames(mas_students, population); //вывод доступных фамилий
-		cout << "Введите существующую фамилию студента: ";
+	while (index_new_surname == -1) { //РµСЃР»Рё РІРІРµРґРµРЅРЅРѕР№ С„Р°РјРёР»РёРё РЅРµС‚
+		cout << endl << "РўР°РєРѕР№ С„Р°РјРёР»РёРё РЅРµС‚!";
+		all_surnames(mas_students, population); //РІС‹РІРѕРґ РґРѕСЃС‚СѓРїРЅС‹С… С„Р°РјРёР»РёР№
+		cout << "Р’РІРµРґРёС‚Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ С„Р°РјРёР»РёСЋ СЃС‚СѓРґРµРЅС‚Р°: ";
 		cin >> surname;
-		index_new_surname = last_name_search(mas_students, population, surname); //индекс нужной фамилии
+		index_new_surname = last_name_search(mas_students, population, surname); //РёРЅРґРµРєСЃ РЅСѓР¶РЅРѕР№ С„Р°РјРёР»РёРё
 	}
 
 	cout << endl;
-	create_student(name_st, last_n_st, patr_st, data_st, addr_st, rat); //запрашиваю данные о студенте
-	mas_students[population].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat); //добавляю нового студента
+	create_student(name_st, last_n_st, patr_st, data_st, addr_st, rat); //Р·Р°РїСЂР°С€РёРІР°СЋ РґР°РЅРЅС‹Рµ Рѕ СЃС‚СѓРґРµРЅС‚Рµ
+	mas_students[population].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat); //РґРѕР±Р°РІР»СЏСЋ РЅРѕРІРѕРіРѕ СЃС‚СѓРґРµРЅС‚Р°
 
-	ofstream output("F3.txt"); // включение файла для записи
+	ofstream output("F3.txt"); // РІРєР»СЋС‡РµРЅРёРµ С„Р°Р№Р»Р° РґР»СЏ Р·Р°РїРёСЃРё
 
-	for (int i = 0; i < index_new_surname; i++) { //перебираю студентов
-		if (!check_mas(mas_index_del, i, population)) { //если студента нет в массиве удаленных
-			writing_to_a_file(output, mas_students, i); //записываю студента в файл
+	for (int i = 0; i < index_new_surname; i++) { //РїРµСЂРµР±РёСЂР°СЋ СЃС‚СѓРґРµРЅС‚РѕРІ
+		if (!check_mas(mas_index_del, i, population)) { //РµСЃР»Рё СЃС‚СѓРґРµРЅС‚Р° РЅРµС‚ РІ РјР°СЃСЃРёРІРµ СѓРґР°Р»РµРЅРЅС‹С…
+			writing_to_a_file(output, mas_students, i); //Р·Р°РїРёСЃС‹РІР°СЋ СЃС‚СѓРґРµРЅС‚Р° РІ С„Р°Р№Р»
 		}
 	}
-	writing_to_a_file(output, mas_students, population); //записываю в файл нового студента
-	for (int i = index_new_surname; i < population; i++) { //перебираю студентов
-		if (!check_mas(mas_index_del, i, population)) { //если студента нет в массиве удаленных
-			writing_to_a_file(output, mas_students, i); //записываю студента в файл
+	writing_to_a_file(output, mas_students, population); //Р·Р°РїРёСЃС‹РІР°СЋ РІ С„Р°Р№Р» РЅРѕРІРѕРіРѕ СЃС‚СѓРґРµРЅС‚Р°
+	for (int i = index_new_surname; i < population; i++) { //РїРµСЂРµР±РёСЂР°СЋ СЃС‚СѓРґРµРЅС‚РѕРІ
+		if (!check_mas(mas_index_del, i, population)) { //РµСЃР»Рё СЃС‚СѓРґРµРЅС‚Р° РЅРµС‚ РІ РјР°СЃСЃРёРІРµ СѓРґР°Р»РµРЅРЅС‹С…
+			writing_to_a_file(output, mas_students, i); //Р·Р°РїРёСЃС‹РІР°СЋ СЃС‚СѓРґРµРЅС‚Р° РІ С„Р°Р№Р»
 		}
 	}
-	cout << "Запись в файл завершена!" << endl;
+	cout << "Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р» Р·Р°РІРµСЂС€РµРЅР°!" << endl;
 
 	return 0;
+}
+
+bool check_mas(int* ptr, int index, int len) { //РїСЂРѕРІРµСЂСЏСЋ РЅР°Р»РёС‡РёРµ СЌР»РµРјРµРЅС‚Р° РІ РјР°СЃСЃРёРІРµ
+	bool flag = false; //СЌР»РµРјРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ
+	for (int i = 0; i < len && !flag; i++) { //РїРµСЂРµР±РёСЂР°СЋ СЌР»РµРјРµРЅС‚С‹ РІ РјР°СЃСЃРёРІРµ
+		if (index == ptr[i]) { //РµСЃР»Рё СЌР»РµРјРµРЅС‚ РЅР°Р№РґРµРЅ
+			flag = true; //С„Р»Р°Рі РјРµРЅСЏРµС‚СЃСЏ, СЌР»РµРјРµРЅС‚ РЅР°Р№РґРµРЅ
+		}
+	}
+	return flag;
+}
+
+void create_student(string& name_st, string& last_n_st, string& patr_st, string& data_st, string& addr_st, int& rat) {
+	//РІРІРѕРґ РїР°СЂР°РјРµС‚СЂРѕРІ СЃС‚СѓРґРµРЅС‚Р°
+
+	cout << "Р’РІРµРґРёС‚Рµ Р¤Р°РјРёР»РёСЋ СЃС‚СѓРґРµРЅС‚Р°: ";
+	cin >> last_n_st; //С„Р°РјРёР»РёСЏ
+	cout << "Р’РІРµРґРёС‚Рµ РРјСЏ СЃС‚СѓРґРµРЅС‚Р°: ";
+	cin >> name_st; //РёРјСЏ
+	cout << "Р’РІРµРґРёС‚Рµ РћС‚С‡РµСЃС‚РІРѕ СЃС‚СѓРґРµРЅС‚Р°: ";
+	cin >> patr_st; //РѕС‚С‡РµСЃС‚РІРѕ
+	cout << "Р’РІРµРґРёС‚Рµ РґР°С‚Сѓ СЂРѕР¶РґРµРЅРёСЏ СЃС‚СѓРґРµРЅС‚Р° (РІ С„РѕСЂРјР°С‚Рµ Р”Р”.РњРњ.Р“Р“Р“Р“): ";
+	cin >> data_st; //РґР°С‚Р° СЂРѕР¶РґРµРЅРёСЏ РІ С„РѕСЂРјР°С‚Рµ Р”Р”.РњРњ.Р“Р“Р“Р“
+	cout << "Р’РІРµРґРёС‚Рµ РґРѕРјР°С€РЅРёР№ Р°РґСЂРµСЃ СЃС‚СѓРґРµРЅС‚Р°: ";
+	cin.ignore();
+	getline(cin, addr_st); //РґРѕРјР°С€РЅРёР№ Р°РґСЂРµСЃ
+
+	do {
+		cout << "Р’РІРµРґРёС‚Рµ СЂРµР№С‚РёРЅРі СЃС‚СѓРґРµРЅС‚Р°: ";
+		cin >> rat; //СЂРµР№С‚РёРЅРі СЃС‚СѓРґРµРЅС‚Р° РѕС‚ 0 РґРѕ 100
+	} while (rat < 0 || rat > 100);
+	cout << endl;
+}
+
+int last_name_search(struct student* N, int quantity, string last_name) { //РїСЂРѕРІРµСЂСЏСЋ РЅР°Р»РёС‡РёРµ С„Р°РјРёР»РёРё
+	int index = -1; //С„Р°РјРёР»РёСЏ РЅРµ РЅР°Р№РґРµРЅР°
+	for (int i = 0; i < quantity && index == -1; i++) {
+		if (last_name == N[i].last_name) { //РµСЃР»Рё С„Р°РјРёР»РёСЏ РЅР°Р№РґРµРЅР°
+			index = i; //РёРЅРґРµРєСЃ РЅР°Р№РґРµРЅРЅРѕР№ С„Р°РјРёР»РёРё
+		}
+	}
+	return index;
+}
+
+void writing_to_a_file(ofstream& file, struct student* N, int index) { //Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р» СЃС‚СѓРґРµРЅС‚Р°
+	file << N[index].last_name << ' ' << N[index].name << ' ' << N[index].patronymic << ' ' << N[index].data << ' ' << N[index].address << "; СЂРµР№С‚РёРЅРі - " << N[index].rating << endl;
+}
+
+void all_surnames(struct student* N, int quantity) { //РІС‹РІРѕРґ С„Р°РјРёР»РёР№ С„СЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ
+	cout << endl << "Р”РѕРїСѓСЃС‚РёРјС‹Рµ С„Р°РјРёР»РёРё СЃС‚СѓРґРµРЅС‚РѕРІ:" << endl;
+	cout << N[0].last_name; //РІС‹РІРѕРґ РїРµСЂРІРѕР№ С„Р°РјРёР»РёРё
+	for (int i = 1; i < quantity; i++) {
+		cout << ", " << N[i].last_name; //РІС‹РІРѕРґ РєР°Р¶РґРѕР№ С„Р°РјРёР»РёРё
+	}
+	cout << endl;
 }
