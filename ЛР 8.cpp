@@ -3,7 +3,6 @@
 #include <fstream>
 using namespace std;
 
-
 struct student { //структура Студент
 	string name = "Иван"; //имя
 	string last_name = "Иванов"; //фамилия
@@ -24,7 +23,7 @@ struct student { //структура Студент
 
 bool check_mas(int* ptr, int index, int len) { //проверяю наличие элемента в массиве
 	bool flag = false; //элемент не найден
-	for (int i = 0; i < len && !flag; i++) {
+	for (int i = 0; i < len && !flag; i++) { //перебираю элементы в массиве
 		if (index == ptr[i]) { //если элемент найден
 			flag = true; //флаг меняется, элемент найден
 		}
@@ -51,7 +50,7 @@ void create_student(string& name_st, string& last_n_st, string& patr_st, string&
 	//	cout << "Введите рейтинг студента: ";
 	//	cin >> rat; //рейтинг от 0 до 100
 	//} while (rat < 0 || rat > 100);
-	//cout << endl;
+	cout << endl;
 }
 
 int last_name_search(struct student* N, int quantity, string last_name) { //проверяю наличие фамилии
@@ -69,8 +68,8 @@ void writing_to_a_file(ofstream& file, struct student* N, int index) { //запись 
 }
 
 void all_surnames(struct student* N, int quantity) { //вывод фамилий фсех студентов
-	cout << endl << "Возможные фамилии студентов:" << endl;
-	cout << N[0].last_name;
+	cout << endl << "Допустимые фамилии студентов:" << endl;
+	cout << N[0].last_name; //вывод первой фамилии
 	for (int i = 1; i < quantity; i++) {
 		cout <<", " << N[i].last_name; //вывод каждой фамилии
 	}
@@ -93,19 +92,12 @@ int main() {
 		cout << "Введите количество студентов (от 1 до " << max_size << "): ";
 		cin >> population; //количество студентов
 	} while (population < 1 || population>max_size);
-
 	cout << endl;
 
 	for (int i = 0; i < population; i++) { //ввожу данные всех студентов
 		create_student(name_st, last_n_st, patr_st, data_st, addr_st, rat);
 		mas_students[i].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat);
 	}
-
-	//for (int i = 0; i < population; i++) { //////////////////---------------------------
-	//	cout << "ВЫВОД имя студента: " << i << endl;
-	//	print(mas_students[i]);
-
-	//}
 
 	int mas_index_del[max_size * 2]; //массив удаленных индексов
 	int k = 0; //текущий индекс последнего удаленного
@@ -124,21 +116,12 @@ int main() {
 					mas_index_del[k] = j;
 					++k;
 				}
-				//mas_index_del[k] = i; //добавляю в массив индекс первого совпадения
-				//mas_index_del[k + 1] = j; //добавляю в массив индекс второго совпадения
-				//k += 2; //увеличивую последний текущий элемент
 			}
 		}
 	}
 
-	cout << "----------------" << endl;
-	for (int i = 0; i < k; i++) {
-		cout << mas_index_del[i] << ' ';
-	}
-
 	string surname; //необходимая фамилия
 	int index_new_surname; //индекс необходимой фамилии
-
 
 	all_surnames(mas_students, population); //вывод доступных фамилий
 	cout << "Введите фамилию студента, перед которым необходимо записать нового студента: "; ////////////можно добавить перечинь фамилий
@@ -148,7 +131,7 @@ int main() {
 	while (index_new_surname == -1) { //если введенной фамилии нет
 		cout << endl << "Такой фамилии нет!";
 		all_surnames(mas_students, population); //вывод доступных фамилий
-		cout << "Введите существующую фамилию: ";
+		cout << "Введите существующую фамилию студента: ";
 		cin >> surname;
 		index_new_surname = last_name_search(mas_students, population, surname); //индекс нужной фамилии
 	}
@@ -156,28 +139,17 @@ int main() {
 	cout << endl;
 	create_student(name_st, last_n_st, patr_st, data_st, addr_st, rat); //запрашиваю данные о студенте
 	mas_students[population].enter_inform(name_st, last_n_st, patr_st, data_st, addr_st, rat); //добавляю нового студента
-	//++population; //увеличиваю количество студентов
-
-	
-
-	//for (int i = 0; i < population; i++) { //////////////////---------------------------
-	//	cout << "ВЫВОД имя студента: " << i << endl;
-	//	print(mas_students[i]);
-
-	//}
 
 	ofstream output("F3.txt"); // включение файла для записи
 
-	for (int i = 0; i < index_new_surname; i++) {
+	for (int i = 0; i < index_new_surname; i++) { //перебираю студентов
 		if (!check_mas(mas_index_del, i, population)) { //если студента нет в массиве удаленных
-			//output << mas_students[i].last_name << ' ' << mas_students[i].name << mas_students[i].patronymic << mas_students[i].data << mas_students[i].address << mas_students[i].rating;
 			writing_to_a_file(output, mas_students, i); //записываю студента в файл
 		}
 	}
-	writing_to_a_file(output, mas_students, population);
-	for (int i = index_new_surname; i < population; i++) {
+	writing_to_a_file(output, mas_students, population); //записываю в файл нового студента
+	for (int i = index_new_surname; i < population; i++) { //перебираю студентов
 		if (!check_mas(mas_index_del, i, population)) { //если студента нет в массиве удаленных
-			//output << mas_students[i].last_name << ' ' << mas_students[i].name << mas_students[i].patronymic << mas_students[i].data << mas_students[i].address << mas_students[i].rating;
 			writing_to_a_file(output, mas_students, i); //записываю студента в файл
 		}
 	}
